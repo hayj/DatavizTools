@@ -20,6 +20,8 @@ def colorise_df_columns(df, grey=None, blue=None, red=None, green=None,
     for color in colors:
         if colors[color] is None:
             colors[color] = set()
+        elif isinstance(colors[color], str):
+            colors[color] = {colors[color]}
     # Making a css_colors dict:
     css_colors = {'grey': grey_rgba, 'blue': blue_rgba, 'red': red_rgba, 'green': green_rgba}
     pre = 'background-color: rgba('

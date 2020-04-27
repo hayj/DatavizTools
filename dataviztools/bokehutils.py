@@ -14,6 +14,17 @@ def toHistogram(values, n=30):
         intervalsAmount = len(valuesSet)
     step = (maxV - minV) / intervalsAmount
     intervals = list(np.arange(minV, maxV, step))
+    if len(intervals) == intervalsAmount:
+        pass
+    elif len(intervals) == intervalsAmount + 1:
+        intervals = intervals[:-1]
+    else:
+        raise Exception("Intervals not valid")
+    # print(minV)
+    # print(maxV)
+    # print(intervals)
+    # print(len(intervals))
+    # print(intervalsAmount)
     assert len(intervals) == intervalsAmount
     hist = [0] * intervalsAmount
     for v in values:
@@ -23,11 +34,11 @@ def toHistogram(values, n=30):
                 break
     return (intervals, hist)
 
-def barplot(values, *args, title=None, labelEncoderFunct=None, floatTruncation=2, height=500, width=900, **kwargs):
+def barplot(values, *args, title=None, hideXAxis=False, hideYAxis=False, hideTools=False, labelEncoderFunct=None, floatTruncation=2, height=500, width=900, **kwargs):
     """
         To use this function:
 
-            from machinelearning.bokehutils import *
+            from dataviztools.bokehutils import *
             from bokeh.plotting import output_notebook, show
             output_notebook()
             show(barplot(getRandomData()))
@@ -55,6 +66,13 @@ def barplot(values, *args, title=None, labelEncoderFunct=None, floatTruncation=2
     p.xgrid.grid_line_color = None
     # p.y_range.start = 0
     p.xaxis.major_label_orientation = 1
+    if hideXAxis:
+        p.xaxis.visible = False
+    if hideYAxis:
+        p.yaxis.visible = False
+    if hideTools:
+        p.toolbar.logo = None
+        p.toolbar_location = None
     return p
 
 
